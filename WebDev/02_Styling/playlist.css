@@ -1,0 +1,30 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+th {
+  background-color: #007BFF;
+  color: white;
+  padding: 10px;
+  font-size: 20px;
+}
+
+td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  vertical-align: middle;
+}
+
+iframe {
+  width: 200px;
+  height: 113px;
+  /* 16:9 ratio */
+}
+
+img {
+  width: 120px;
+  height: auto;
+}
