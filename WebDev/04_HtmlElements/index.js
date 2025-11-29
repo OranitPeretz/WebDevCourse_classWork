@@ -1,96 +1,52 @@
+document.addEventListener("DOMContentLoaded", () => pageLoaded());
 
-document.addEventListener("DOMContentLoaded", () => {
-    pageLoaded();
-    //...
-});
-
-let txt1, txt2, btn, lblRes;
+let txt1, txt2, op, btn, lblRes;
 
 function pageLoaded() {
     txt1 = document.getElementById("txt1");
-    txt2 = document.querySelector('#txt2');
+    txt2 = document.getElementById("txt2");
+    op = document.getElementById("op");
     btn = document.getElementById("btnCalc");
     lblRes = document.getElementById("lblRes");
-    btn.addEventListener('click', () => {
-        calculate();
-    });
 
-
+    btn.addEventListener("click", calculate);
 }
 
 function calculate() {
-    let txt1Text = txt1.value;
-    let num1 = parseInt(txt1Text);
+    let v1 = txt1.value.trim();
+    let v2 = txt2.value.trim();
 
-    let txt2Text = txt2.value;
-    let num2 = parseInt(txt2Text);
-
-    let res = num1 + num2;
-    lblRes.innerText = res;
-}
-
-const btn2 = document.getElementById("btn2");
-btn2.addEventListener("click", () => { print("btn2 clicked: " + btn2.id + " | " + btn2.innerText); });
-//function func1(){}
-//btn2.addEventListener("click",func1);
-
-
-// =============================================
-// HELPER: PRINT TO TEXTAREA
-// =============================================
-function print(msg) {
-    //--Get TextArea Element reference
-    const ta = document.getElementById("output");
-    //--Write msg to TextArea text
-    if (ta) ta.value = msg;
-    //write Log
-    else console.log(msg);
-}
-
-
-
-// =============================================
-// STEP 1: JS NATIVE TYPES, USEFUL TYPES & OPERATIONS
-// =============================================
-function demoNative() {
-    let out = "=== STEP 1: NATIVE TYPES ===\n";
-
-    // String
-    const s = "Hello World";
-    out += "\n[String] s = " + s;
-    out += "\nLength: " + s.length;
-    out += "\nUpper: " + s.toUpperCase();
-
-    // Number
-    const n = 42;
-    out += "\n\n[Number] n = " + n;
-
-    // Boolean
-    const b = true;
-    out += "\n\n[Boolean] b = " + b;
-
-    // Date
-    const d = new Date();
-    out += "\n\n[Date] now = " + d.toISOString();
-
-    // Array
-    const arr = [1, 2, 3, 4];
-    out += "\n\n[Array] arr = [" + arr.join(", ") + "]";
-    out += "\nPush 5 → " + (arr.push(5), arr.join(", "));
-    out += "\nMap x2 → " + arr.map(x => x * 2).join(", ");
-
-    // Functions as variables
-    const add = function (a, b) { return a + b; };
-    out += "\n\n[Function as variable] add(3,4) = " + add(3, 4);
-
-    // Callback
-    function calc(a, b, fn) {
-        return fn(a, b);
+    if (v1 === "" || v2 === "" || isNaN(v1) || isNaN(v2)) {
+        lblRes.value = "Invalid input";
+        return;
     }
-    const result = calc(10, 20, (x, y) => x + y);
-    out += "\n[Callback] calc(10,20, x+y ) = " + result;
 
-    // Print to Log
-    print(out);
+    let n1 = Number(v1);
+    let n2 = Number(v2);
+    let oper = op.value;
+
+    let result;
+
+    switch (oper) {
+        case "+": result = n1 + n2; break;
+        case "-": result = n1 - n2; break;
+        case "*": result = n1 * n2; break;
+        case "/": result = n2 === 0 ? "Error" : n1 / n2; break;
+        case "^": result = n1 ** n2; break;
+    }
+
+    lblRes.value = result;
+
+    print(`${n1} ${oper} ${n2} = ${result}`, true);
 }
 
+function print(msg, append = false) {
+    const ta = document.getElementById("output");
+
+    if (!ta) return console.log(msg);
+
+    if (append)
+        ta.value += msg + "\n";
+    else
+        ta.value = msg + "\n";
+}
